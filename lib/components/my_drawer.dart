@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/components/my_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -5,6 +6,60 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Drawer(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      child: Column(
+        children: [
+          // Drawer Header
+          DrawerHeader(
+            child: Icon(
+              Icons.shopping_bag,
+              size: 72,
+              color: Theme.of(context).colorScheme.inversePrimary,
+            ),
+          ),
+
+          const SizedBox(height: 25),
+
+          // TOP ITEMS (Shop + Cart)
+          Padding(
+            padding: const EdgeInsets.only(left: 25),
+            child: Column(
+              children: [
+                MyListTile(
+                  text: "Shop",
+                  icon: Icons.home,
+                  onTap: () => Navigator.pop(context),
+                ),
+                MyListTile(
+                  text: "Cart",
+                  icon: Icons.shopping_cart,
+                  onTap: (){
+                    //pop drawer first
+                    Navigator.pop(context);
+
+                    // go to the cart page
+                    Navigator.pushNamed(context, '/cart_page');
+                  },
+                ),
+              ],
+            ),
+          ),
+
+          // 🔥 THIS IS THE KEY LINE
+          const Spacer(),
+
+          // EXIT AT BOTTOM
+          Padding(
+            padding: const EdgeInsets.only(left: 25, bottom: 25),
+            child: MyListTile(
+              text: "Exit",
+              icon: Icons.logout,
+              onTap: () => Navigator.pushNamedAndRemoveUntil(context,'/intro_page', (route) => false),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
